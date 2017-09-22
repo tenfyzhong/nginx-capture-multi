@@ -1,0 +1,24 @@
+version: "2"
+
+services:
+  proxy:
+    image: openresty/openresty:1.11.2.5-alpine
+    container_name: proxy
+    ports:
+      - "8080:8080"
+    volumes:
+      - $PWD/nginx_proxy.conf:/usr/local/openresty/nginx/conf/nginx.conf
+    links:
+      - route0
+      - route1
+
+  route0:
+    image: hello-world
+    build: 
+      context: ./hello-world
+    container_name: route0
+
+  route1:
+    image: hello-world
+    container_name: route1
+
